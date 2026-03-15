@@ -14,7 +14,6 @@ let package = Package(
             targets: ["SocialSignInKit"]
         ),
     ],
-    // TODO: Add Facebook, Apple, Microsoft, GitHub, LinkedIn, TikTok, Discord
     dependencies: [
         /// Non-negotiable: Apple
         /// 'App Store Review Guideline 4.8 states that if your app offers third-party social sign-in, Sign in with Apple must also be offered.'
@@ -22,6 +21,9 @@ let package = Package(
         /// Expected by most users: Google, Facebook,
         /// Situational: Microsoft, Twitter/X, GitHub
         /// Niche: TikTok, LinkedIn, Discord
+        
+        .package(url: "https://github.com/google/GoogleSignIn-iOS",
+                 from: "9.0.0")
     ],
     targets: [
         .target(
