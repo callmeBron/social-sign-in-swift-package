@@ -3,12 +3,14 @@ import SocialSignInKit
 
 @main
 struct ExampleApp: App {
+    
     init() {
-        // configure sign ons
+        //TODO: init any necessary configurations
     }
+    
     var body: some Scene {
         WindowGroup {
-            Text("Hello Sign ins")
+            Text("Hello Sign in")
         }
     }
 }
