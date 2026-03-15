@@ -5,6 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "SocialSignInKit",
+    platforms: [
+        .iOS(.v15)
+               ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
@@ -22,5 +25,10 @@ let package = Package(
             name: "SocialSignInKitTests",
             dependencies: ["SocialSignInKit"]
         ),
+        .executableTarget(
+            name: "ExampleApp",
+            dependencies: ["SocialSignInKit"],
+            path: "ExampleApp"
+        )
     ]
 )
