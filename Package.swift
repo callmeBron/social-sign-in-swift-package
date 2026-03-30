@@ -9,10 +9,7 @@ let package = Package(
         .iOS(.v18)
     ],
     products: [
-        .library(
-            name: "SocialSignInKit",
-            targets: ["SocialSignInKit"]
-        ),
+        .library(name: "SocialSignInKit", targets: ["SocialSignInKit"]),
     ],
     dependencies: [
         /// Non-negotiable: Apple
@@ -27,7 +24,11 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "SocialSignInKit"
+            name: "SocialSignInKit",
+            dependencies: [
+                .product(name: "GoogleSignIn", package: "GoogleSignIn-iOS"),
+                .product(name: "GoogleSignInSwift", package: "GoogleSignIn-iOS"),
+            ]
         ),
         .testTarget(
             name: "SocialSignInKitTests",

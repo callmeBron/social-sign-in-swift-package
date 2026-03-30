@@ -1,14 +1,6 @@
-//
-//  SocialSignInError.swift
-//  SocialSignInKit
-//
-//  Created by Bronwyn dos Santos on 2026/03/30.
-//
-
-
 import Foundation
 
-public enum SocialSignInError: Error, LocalizedError {
+public enum SocialSignInError: Error, LocalizedError, @unchecked Sendable {
     case cancelled
     case missingClientID
     case missingToken

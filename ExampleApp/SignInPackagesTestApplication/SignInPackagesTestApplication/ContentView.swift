@@ -1,24 +1,92 @@
-//
-//  ContentView.swift
-//  SignInPackagesTestApplication
-//
-//  Created by Bronwyn dos Santos on 2026/03/30.
-//
-
 import SwiftUI
+import SocialSignInKit
 
-struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
+enum AuthState {
+    case idle
+    case loading
+    case signedIn(SocialUser)
+    case error(SocialSignInError)
 }
 
-#Preview {
-    ContentView()
+struct LogInView: View {
+    @State private var authState: AuthState = .idle
+    
+    var body: some View {
+        NavigationStack {
+            VStack(spacing: 24) {
+                switch authState {
+                case .idle:
+                    idleView
+                case .loading:
+                    ProgressView("Signing in...")
+                case .signedIn(let result):
+                    signedInView(result)
+                case .error(let message):
+                    errorView(message)
+                }
+            }
+            .padding()
+            .navigationTitle("SocialSignInKit")
+            .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+    
+    @ViewBuilder
+    var idleView: some View {
+        VStack(spacing: 20) {
+            Image("socialimage")
+                .resizable()
+                .frame(width: 200, height: 200)
+            Spacer()
+            
+            Divider()
+            Text("Social Sign in")
+                .font(.headline)
+                .bold()
+            
+            GoogleSignInButton(style: .standard(colorScheme: .dark)) { result in
+                switch result {
+                case .success(let user):
+                    authState = .signedIn(user)
+                case .failure(let error):
+                    authState = .error(error)
+                }
+            }
+            Spacer()
+        }
+    }
+    
+    @ViewBuilder
+    func signedInView(_ result: SocialUser) -> some View {
+        VStack(spacing: 20) {
+            Text("Signed in")
+                .font(.headline)
+            
+            AsyncImage(url: result.profileImageURL)
+                .clipShape(.circle)
+                .frame(width: 50)
+            
+            
+            LabeledContent("Name", value: result.displayName ?? "no name found")
+            LabeledContent("Email", value: result.email)
+            Divider()
+            Spacer()
+            Button("Sign out", role: .destructive) {
+                authState = .idle
+            }
+            .buttonStyle(.borderedProminent)
+        }
+    }
+    
+    @ViewBuilder
+    private func errorView(_ message: SocialSignInError) -> some View {
+        VStack(spacing: 16) {
+            Image(systemName: "exclamationmark.triangle")
+                .font(.largeTitle)
+                .foregroundStyle(.red)
+            Text(message.localizedDescription ?? "no failure reason found")
+                .multilineTextAlignment(.center)
+            Button("Try again") { authState = .idle }
+        }
+    }
 }

@@ -1,17 +1,19 @@
-//
-//  SignInPackagesTestApplicationApp.swift
-//  SignInPackagesTestApplication
-//
-//  Created by Bronwyn dos Santos on 2026/03/30.
-//
-
 import SwiftUI
+import SocialSignInKit
 
 @main
 struct SignInPackagesTestApplicationApp: App {
+    
+    init() {
+        SocialSignInKit.configure(googleClientID: "408804780942-jhb53hlo69pd8a698ds86b4bkijjh7ah.apps.googleusercontent.com")
+    }
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LogInView()
+                .onOpenURL { url in
+                    SocialSignInKit.handle(url)
+                }
         }
     }
 }
