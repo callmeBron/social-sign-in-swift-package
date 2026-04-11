@@ -6,20 +6,29 @@ import PackageDescription
 let package = Package(
     name: "SocialSignInKit",
     platforms: [
-        .iOS(.v15)
-               ],
+        .iOS(.v18)
+    ],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
-        .library(
-            name: "SocialSignInKit",
-            targets: ["SocialSignInKit"]
-        ),
+        .library(name: "SocialSignInKit", targets: ["SocialSignInKit"]),
+    ],
+    dependencies: [
+        /// Non-negotiable: Apple
+        /// 'App Store Review Guideline 4.8 states that if your app offers third-party social sign-in, Sign in with Apple must also be offered.'
+        
+        /// Expected by most users: Google, Facebook,
+        /// Situational: Microsoft, Twitter/X, GitHub
+        /// Niche: TikTok, LinkedIn, Discord
+        
+        .package(url: "https://github.com/google/GoogleSignIn-iOS",
+                 from: "9.0.0")
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "SocialSignInKit"
+            name: "SocialSignInKit",
+            dependencies: [
+                .product(name: "GoogleSignIn", package: "GoogleSignIn-iOS"),
+                .product(name: "GoogleSignInSwift", package: "GoogleSignIn-iOS"),
+            ]
         ),
         .testTarget(
             name: "SocialSignInKitTests",
