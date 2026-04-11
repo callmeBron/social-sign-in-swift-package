@@ -52,6 +52,15 @@ struct LogInView: View {
                     authState = .error(error)
                 }
             }
+            
+            GoogleSignInButton(style: .standard(colorScheme: .light)) { result in
+                switch result {
+                case .success(let user):
+                    authState = .signedIn(user)
+                case .failure(let error):
+                    authState = .error(error)
+                }
+            }
             Spacer()
         }
     }
