@@ -61,6 +61,36 @@ struct LogInView: View {
                     authState = .error(error)
                 }
             }
+            
+            AppleSignInButton(style: .dark) { result in
+                switch result {
+                case .success(let user):
+                    print("Signed in as \(user.displayName ?? user.email)")
+                case .failure(let error):
+                    if case .cancelled = error { return }
+                    print(error.localizedDescription)
+                }
+            }
+            
+            AppleSignInButton(style: .light) { result in
+                switch result {
+                case .success(let user):
+                    print("Signed in as \(user.displayName ?? user.email)")
+                case .failure(let error):
+                    if case .cancelled = error { return }
+                    print(error.localizedDescription)
+                }
+            }
+            
+            AppleSignInButton(style: .lightOutline) { result in
+                switch result {
+                case .success(let user):
+                    print("Signed in as \(user.displayName ?? user.email)")
+                case .failure(let error):
+                    if case .cancelled = error { return }
+                    print(error.localizedDescription)
+                }
+            }
             Spacer()
         }
     }

@@ -7,7 +7,14 @@ enum UserMapper {
         }
         
         return .success(
-            SocialUser(id: raw.id, email: raw.email, displayName: raw.displayName, givenName: raw.givenName, familyName: raw.familyName, profileImageURL: raw.profileImageURL, idToken: idToken, accessToken: raw.accessToken)
+            SocialUser(id: raw.id,
+                       email: raw.email,
+                       displayName: raw.displayName,
+                       givenName: raw.givenName,
+                       familyName: raw.familyName,
+                       profileImageURL: raw.profileImageURL,
+                       idToken: idToken,
+                       accessToken: raw.accessToken)
         )
     }
 }
